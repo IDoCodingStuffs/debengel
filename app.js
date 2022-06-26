@@ -17,17 +17,16 @@ fetch('https://eksisozluk.com/takip-engellenmis').then(r => r.text()).then(resul
     for (let e of blockedThreadsList) susersToHideFromDEBE.add(e.getElementsByTagName("a")[1].getAttribute("data-nick"));
 });
 
-//Try if current window is an entry
-if (window.location.href.includes("/entry/")) {
-    //Retrieve the entry author
-    var authorHref = div.getElementsByClassName("entry-author")[0];
-    var author = authorHref.textContent;
+//Retrieve entries list
+var entries = document.getElementById("entry-item-list");
 
-    //Check if author is in blocked users list, hide element if it does
-    if (susersToHideFromDEBE.has(author)) {
-        var content = div.getElementsByClassName("content");
-        content.innerHTML = "BU YAZARI ENGELLEMİŞSİNİZ"
+if (entries != null) {
+    for (let div of entries.getElementsByTagName("li")) {
+        var author = div.getAttribute("data-author");
+        //Check if author is in blocked users list, mask element if it does
+        if (author != null && susersToHideFromDEBE.has(author)) {
+            var content = div.getElementsByClassName("content")[0];
+            content.innerHTML = "BU YAZARI ENGELLEMİŞSİNİZ"
+        }
     }
-
-    console.log(author);
 }
