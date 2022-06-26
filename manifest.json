@@ -1,8 +1,9 @@
 {
     "name": "Debengel",
-    "description": "Engel listesindeki yazarlarin debe girilerini gizleme seysi",
-    "version": "0.0.0",
+    "description": "Engel listesindeki yazarlarin debe girilerini maskeleme seysi",
+    "version": "1.0",
     "manifest_version": 3,
+    "icons" : [],
     "content_scripts": [
         {
           "matches": ["https://*.eksisozluk.com/*"],
