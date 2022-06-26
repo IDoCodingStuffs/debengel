@@ -17,27 +17,17 @@ fetch('https://eksisozluk.com/takip-engellenmis').then(r => r.text()).then(resul
     for (let e of blockedThreadsList) susersToHideFromDEBE.add(e.getElementsByTagName("a")[1].getAttribute("data-nick"));
 });
 
-//Left bar has the id partial-index
-var leftBarList = document.getElementById("partial-index").getElementsByTagName("li");
+//Try if current window is an entry
+if (window.location.href.includes("/entry/")) {
+    //Retrieve the entry author
+    var authorHref = div.getElementsByClassName("entry-author")[0];
+    var author = authorHref.textContent;
 
-//Pull each entry, check author, hide if in the blocked list
-for (let e of leftBarList) {
-    //href of hyperlink is to the entry
-    var entryLink = e.getElementsByTagName("a")[0].getAttribute("href");
+    //Check if author is in blocked users list, hide element if it does
+    if (susersToHideFromDEBE.has(author)) {
+        var content = div.getElementsByClassName("content");
+        content.innerHTML = "BU YAZARI ENGELLEMİŞSİNİZ"
+    }
 
-    fetch(entryLink).then(r => r.text()).then(result => {
-        //Retrieve follow and block page as text, convert to DOM
-        var div = document.createElement('div');
-        div.innerHTML = result;
-        
-        //Retrieve the entry author
-        var authorHref = div.getElementsByClassName("entry-author")[0];
-        var author = authorHref.textContent;
-
-        //Check if author is in blocked users list, hide element if it does
-        if (susersToHideFromDEBE.has(author)) {
-            console.log("Suser gizlendi: " + author);
-            e.style.display = "none";
-        }
-    });
+    console.log(author);
 }
